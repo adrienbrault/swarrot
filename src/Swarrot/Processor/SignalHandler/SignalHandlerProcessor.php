@@ -5,11 +5,10 @@ namespace Swarrot\Processor\SignalHandler;
 use Swarrot\Broker\Message;
 use Swarrot\Processor\ProcessorInterface;
 use Swarrot\Processor\ConfigurableInterface;
-use Swarrot\Processor\SleepyInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SignalHandlerProcessor implements ConfigurableInterface, SleepyInterface
+class SignalHandlerProcessor implements ConfigurableInterface
 {
     /**
      * @var boolean
@@ -44,14 +43,6 @@ class SignalHandlerProcessor implements ConfigurableInterface, SleepyInterface
         $resolver->setDefaults(array(
             'signal_handler_signals' => array(SIGTERM, SIGINT, SIGQUIT)
         ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function sleep(array $options)
-    {
-        return !$this->shouldStop();
     }
 
     /**

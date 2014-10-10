@@ -9,7 +9,6 @@ use Swarrot\Processor\ProcessorInterface;
 use Swarrot\Processor\ConfigurableInterface;
 use Swarrot\Processor\InitializableInterface;
 use Swarrot\Processor\TerminableInterface;
-use Swarrot\Processor\SleepyInterface;
 use Psr\Log\LoggerInterface;
 
 class Consumer
@@ -82,12 +81,6 @@ class Consumer
             while (null !== $message = $this->messageProvider->get()) {
                 if (false === $this->processor->process($message, $options)) {
                     break 2;
-                }
-            }
-
-            if ($this->processor instanceof SleepyInterface) {
-                if (false === $this->processor->sleep($options)) {
-                    break;
                 }
             }
 

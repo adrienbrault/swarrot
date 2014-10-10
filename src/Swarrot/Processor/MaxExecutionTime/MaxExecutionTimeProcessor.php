@@ -8,9 +8,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Swarrot\Processor\InitializableInterface;
 use Swarrot\Processor\ConfigurableInterface;
-use Swarrot\Processor\SleepyInterface;
 
-class MaxExecutionTimeProcessor implements ConfigurableInterface, InitializableInterface, SleepyInterface
+class MaxExecutionTimeProcessor implements ConfigurableInterface, InitializableInterface
 {
     /**
      * @var ProcessorInterface
@@ -58,16 +57,6 @@ class MaxExecutionTimeProcessor implements ConfigurableInterface, InitializableI
     public function initialize(array $options)
     {
         $this->startTime = microtime(true);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return boolean
-     */
-    public function sleep(array $options)
-    {
-        return !$this->isTimeExceeded($options);
     }
 
     /**

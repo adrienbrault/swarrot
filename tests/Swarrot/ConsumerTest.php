@@ -89,22 +89,4 @@ class ConsumerTest extends ProphecyTestCase
         $consumer = new Consumer($provider->reveal(), $processor->reveal());
         $this->assertNull($consumer->consume());
     }
-
-    public function test_it_call_processor_if_its_Sleepy()
-    {
-        $provider  = $this->prophesize('Swarrot\Broker\MessageProvider\MessageProviderInterface');
-        $processor = $this->prophesize('Swarrot\Processor\SleepyInterface');
-
-        $message = new Message('body', array(), 1);
-
-        $provider->get()->willReturn($message);
-        $processor->sleep(Argument::type('array'))->willReturn(null);
-        $processor->process(
-            Argument::type('Swarrot\Broker\Message'),
-            Argument::type('array')
-        )->willReturn(false);
-
-        $consumer = new Consumer($provider->reveal(), $processor->reveal());
-        $this->assertNull($consumer->consume());
-    }
 }

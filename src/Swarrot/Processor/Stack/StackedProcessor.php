@@ -10,7 +10,7 @@ use Swarrot\Processor\SleepyInterface;
 use Swarrot\Broker\Message;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class StackedProcessor implements ConfigurableInterface, InitializableInterface, TerminableInterface, SleepyInterface
+class StackedProcessor implements ConfigurableInterface, InitializableInterface, TerminableInterface
 {
     /**
      * @var mixed
@@ -88,21 +88,5 @@ class StackedProcessor implements ConfigurableInterface, InitializableInterface,
                 $middleware->terminate($options);
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function sleep(array $options)
-    {
-        foreach ($this->middlewares as $middleware) {
-            if ($middleware instanceof SleepyInterface) {
-                if (false === $middleware->sleep($options)) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 }
